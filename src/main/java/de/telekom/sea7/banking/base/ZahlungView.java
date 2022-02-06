@@ -1,8 +1,8 @@
-package de.telekom.sea7.banking;
+package de.telekom.sea7.banking.base;
 
 public interface ZahlungView {
 
-	void zahlungAnzeigen(Zahlung zahlung);
+	void zahlungAnzeigen(Depot depot, Zahlung zahlung);
 
 	Zahlung getZahlung();
 
@@ -11,3 +11,4 @@ public interface ZahlungView {
 	
 
 }
+

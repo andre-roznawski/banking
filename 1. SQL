@@ -1,0 +1,11 @@
+--create table iban (id int primary key,IbanNR varchar (20));
+--Insert into iban (id, IbanNr) values (1, 'DE123456789012345678');
+--Insert into iban (id, IbanNr) values (2, 'SE345678912345678901');
+--Insert into iban (id, IbanNr) values (3, 'DE456789012365478945');
+--alter table zahlungen add column iban_id int not null;
+--alter table zahlungen drop column iban_id;
+--alter table zahlungen add constraint fk_zahlungen_iban_id foreign key (iban_id) references iban(id);
+--update zahlungen set iban_id=1 where zahlungid =1;
+--update zahlungen set iban_id=2 where zahlungid =2;
+--update zahlungen set iban_id=3 where zahlungid =3;
+--alter table zahlungen drop column iban;

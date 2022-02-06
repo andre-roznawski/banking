@@ -1,19 +1,21 @@
 package de.telekom.sea7.banking;
 
-public class DepotImpl implements Depot {
+import de.telekom.sea7.banking.base.Depot;
 
-	private Object[] liste = new Object[9];
+public class DepotImpl <T> implements Depot <T> {
+
+	private T[] liste = ((T[])new Object[9]);
+	private String message;
 
 	//Konstruktor vorbelegung aller Felder mit aufsteigender integer Zahl beginnend bei null 
 	public DepotImpl() {
-		for (int i = 0; i < liste.length; i++) {
-			liste[i] = i;
-		}
+		//for (int i = 0; i < liste.length; i++) {
+		//liste[i] = null;  }
 	}
 
 	//ja
 	@Override
-	public Object getContent(int index) {
+	public T getContent(int index) {
 		
 		checkIndex (index);
 		//if (!checkIndex (index)) {
@@ -26,7 +28,7 @@ public class DepotImpl implements Depot {
 	}
 
 	@Override
-	public Object[] getListe() {
+	public T[] getListe() {
 		return liste;
 	}
 
@@ -69,7 +71,7 @@ public class DepotImpl implements Depot {
 	}
 
 	@Override
-	public boolean contains(Object object) {
+	public boolean contains(T object) {
 		for (int i = 0; i < liste.length; i++) {
 			var element = liste[i];
 			if ((element != null) && (element.equals(object)))
@@ -79,7 +81,7 @@ public class DepotImpl implements Depot {
 	}
 // ja
 	@Override
-	public void setListe(Object element, int index){
+	public void setListe(T element, int index){
 		checkIndex (index);
 		//if (!checkIndex (index)) {
 			//throw new RuntimeException (index + " liegt ausserhalb des definierten Wertebereichs 0 - " + (size()-1));
@@ -104,7 +106,7 @@ public class DepotImpl implements Depot {
 	}
 	
     public boolean checkIndex (int index){
-    	if ((index >= 0) && (index < size())){
+    	if ((index >= 0) && (index < liste.length)){
     		return true;
     	}else {
     		throw new RuntimeException (index + " liegt ausserhalb des definierten Wertebereichs 0 - " + (size()-1));
@@ -116,12 +118,19 @@ public class DepotImpl implements Depot {
        
     
 	@Override
-	public int indexOf(Object object) {
+	public int indexOf(T object) {
 		for (int i = 0; i < liste.length; i++) {
 			var element = liste[i];
 			if ((element != null) && (element.equals(object)))
 				return i;
 		}
 		return -1;
+	}
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
