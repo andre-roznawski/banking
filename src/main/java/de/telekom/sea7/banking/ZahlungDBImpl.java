@@ -12,7 +12,27 @@ public class ZahlungDBImpl {
 	private String verwendungszweck;
 	private boolean echtzeitueberweisung;
 	private int iban_id;
+    private Connection con;
+	
+	String sqlForInsert = "INSERT INTO zahlungen (Empfaenger, Betrag, Verwendungszweck, Echtzeitueberweisung, iban_id) VALUES ( ?, ? ,?, ?, ?)";
+	String sqlForSelect = "SELECT * FROM zahlungen WHERE ID = ?";
+	String sqlForAll = "SELECT * FROM zahlungen";
 
+	private PreparedStatement psForInsert;
+	private PreparedStatement psForSelect;
+	private PreparedStatement psForAll;
+	
+	public ZahlungDBImpl(Connection con) throws SQLException {
+		this.con = con;
+
+		psForInsert = con.prepareStatement(sqlForInsert);
+		psForSelect = con.prepareStatement(sqlForSelect);
+		}
+	
+	
+	
+	
+	
 //		public void setZahlung(Statement stm, String empfaenger, float betrag, String verwendungszweck, boolean echtzeitueberweisung, int iban_id) {
 //			try (ResultSet rs = stm.executeQuery("insert into zahlungen (Empfaenger, Betrag, Verwendungszweck, Echtzeitueberweisung, iban_id) values ('empfaenger', 'betrag', 'verwendungszweck', 'echtzeitueberweisung', 'iban_id')"){ 
 //			} catch (SQLException e1) {
@@ -20,15 +40,31 @@ public class ZahlungDBImpl {
 //			}
 //}
 
-	public void getZahlung(Statement stm) {
-		try (ResultSet rs = stm.executeQuery("select * from zahlungen where ZahlungID=1" )){
-				while (rs.next()) {
-					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " "
-							+ rs.getString(4) + " " + rs.getString(5));
-				}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+	public void getZahlung(int id) {
+		try {
+			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche Zeilen.
+			psForSelect.setInt(1, id);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		try {
+			System.out.println(psForSelect.ex     execute(sqlForSelect));
+			//psForSelect.execute(sqlForSelect);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+//		while (psForSelect.n()) {
+//			System.out.println(psForSelect.getString(1) + " " + psForSelect.getString(2) + " " + psForSelect.getString(3) + " "
+//					+ psForSelect.getString(4) + " " + psForSelect.getString(5));
+//		}
+//		try (ResultSet rs = stm.executeQuery("select * from zahlungen where ZahlungID=1" )){
+//				while (rs.next()) {
+//					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " "
+//							+ rs.getString(4) + " " + rs.getString(5));
+//				}
+//		} catch (SQLException e1) {
+//			e1.printStackTrace();
+//		}
 }
 	
 	public String getEmpfaenger(Statement stm) {

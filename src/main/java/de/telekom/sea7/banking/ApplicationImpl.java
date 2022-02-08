@@ -22,7 +22,7 @@ public class ApplicationImpl implements Application {
 	private Zahlung zahlung = new ZahlungImpl();
 	private Zahlung zahlung1 = new ZahlungImpl();
 	private Zahlung zahlung2 = new ZahlungImpl();
-	private ZahlungDBImpl testzahlung = new ZahlungDBImpl();
+	private ZahlungDBImpl testzahlung; 
 
 	// Variablen für die Connection
 	final String URL = "jdbc:mariadb://localhost:3306/myfirstdb";
@@ -60,6 +60,7 @@ public class ApplicationImpl implements Application {
         //Connection zur DB
 		try (Connection con = DriverManager.getConnection(URL, user, password)) {
 			System.out.println("Verbindung erfolgreich hergestellt!");
+			testzahlung = new ZahlungDBImpl(con);
 			try (Statement stm = con.createStatement()) {
 
 				depot.setMessage("depot-Out");
@@ -79,12 +80,12 @@ public class ApplicationImpl implements Application {
 				// ###depotview.csvFileReader(depot1,"eingabedatei.csv");
 
 				depotview.depotAnzeige(depot1);
-testzahlung.getZahlung(stm);
-System.out.println(testzahlung.getEmpfaenger(stm));
-System.out.println(testzahlung.getIban(stm));
-System.out.println(testzahlung.getBetrag(stm));
-System.out.println(testzahlung.getVerwendungszweck(stm));
-System.out.println(testzahlung.getEchtzeitueberweisung(stm));
+testzahlung.getZahlung(1);
+//System.out.println(testzahlung.getEmpfaenger(stm));
+//System.out.println(testzahlung.getIban(stm));
+//System.out.println(testzahlung.getBetrag(stm));
+//System.out.println(testzahlung.getVerwendungszweck(stm));
+//System.out.println(testzahlung.getEchtzeitueberweisung(stm));
 
 
 
