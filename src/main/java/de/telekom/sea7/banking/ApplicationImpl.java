@@ -80,7 +80,9 @@ public class ApplicationImpl implements Application {
 				// ###depotview.csvFileReader(depot1,"eingabedatei.csv");
 
 				depotview.depotAnzeige(depot1);
-testzahlung.getZahlung(1);
+testzahlung.getZahlung(2);
+testzahlung.getAll();
+testzahlung.setZahlung("Helmut Meister", 612.14f, "Rechnung Heizung Brösel", true, 4); 
 //System.out.println(testzahlung.getEmpfaenger(stm));
 //System.out.println(testzahlung.getIban(stm));
 //System.out.println(testzahlung.getBetrag(stm));
