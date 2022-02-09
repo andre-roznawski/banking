@@ -53,7 +53,8 @@ public class ZahlungDBImpl {
 			int rows = psForInsert.executeUpdate();
 			//while (rs.next()) {
 				System.out.println("\nDas ist ein erfolgreiches Update auf Zahlungen von: " + rows + "Datensaetzen");
-				//System.out.println(String.format("%30s,%.2f,%30s,%8s,%2d"), empfaenger, betrag, verwendungszweck, echtzeitueberweisung, iban_id);
+				System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", empfaenger, betrag, verwendungszweck, echtzeitueberweisung, iban_id));
+				
 			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
