@@ -4,11 +4,28 @@ import de.telekom.sea7.banking.base.Zahlung;
 
 public class ZahlungImpl implements Zahlung {
 
+	private int id;
 	private String empfaenger;
-	private String iban;
 	private float betrag;
 	private String verwendungszweck;
 	private boolean echtzeitueberweisung;
+	private int ibanid;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getIbanid() {
+		return ibanid;
+	}
+
+	public void setIbanid(int ibanid) {
+		this.ibanid = ibanid;
+	}
 
 	public String getEmpfaenger() {
 		return empfaenger;
@@ -19,11 +36,7 @@ public class ZahlungImpl implements Zahlung {
 		this.empfaenger = empfaenger;
 	}
 
-	public String getIban() {
-		return iban;
-	}
-
-	public float getBetrag() {
+		public float getBetrag() {
 		return betrag;
 	}
 
@@ -39,7 +52,7 @@ public class ZahlungImpl implements Zahlung {
 		this.verwendungszweck = verwendungszweck;
 	}
 
-	public boolean isEchtzeitueberweisung() {
+	public boolean getEchtzeitueberweisung() {
 		return echtzeitueberweisung;
 	}
 
@@ -47,10 +60,10 @@ public class ZahlungImpl implements Zahlung {
 		this.echtzeitueberweisung = echtzeitueberweisung;
 	}
 
-	public void setIban(String iban) {
-		this.iban = iban;
-	}
 	public String toString() {
-		return empfaenger+" "+iban+" "+betrag+"€ "+verwendungszweck+"  "+echtzeitueberweisung;
+		return id +" "+ empfaenger +" "+ betrag + "€ "+" "+ verwendungszweck +"  "+ echtzeitueberweisung +" "+ ibanid;
 	}
+
+	
+	
 }

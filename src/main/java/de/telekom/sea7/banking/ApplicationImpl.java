@@ -22,7 +22,8 @@ public class ApplicationImpl implements Application {
 	private Zahlung zahlung = new ZahlungImpl();
 	private Zahlung zahlung1 = new ZahlungImpl();
 	private Zahlung zahlung2 = new ZahlungImpl();
-	private ZahlungDBImpl testzahlung; 
+	private ZahlungDBImpl zahlungdbquest; 
+	
 
 	// Variablen für die Connection
 	final String URL = "jdbc:mariadb://localhost:3306/myfirstdb";
@@ -31,21 +32,19 @@ public class ApplicationImpl implements Application {
 
 	public void initAll(Depot<Zahlung> depot) {
 
-		zahlung.setEmpfaenger("Harry Mueller");
-		zahlung.setIban("DE123456789");
-		zahlung.setBetrag(1000);
-		zahlung.setVerwendungszweck("Rechnung xyz");
-		zahlung.setEchtzeitueberweisung(false);
-		zahlung1.setEmpfaenger("Eva Maier");
-		zahlung1.setIban("SE3456789");
-		zahlung1.setBetrag(2000);
-		zahlung1.setVerwendungszweck("Mitgliedsbeitrag Reitverein");
-		zahlung1.setEchtzeitueberweisung(true);
-		zahlung2.setEmpfaenger("Georg Kanz");
-		zahlung2.setIban("DE45456789");
-		zahlung2.setBetrag(33.33f);
-		zahlung2.setVerwendungszweck("ebay Kauf vom 11.01.22");
-		zahlung2.setEchtzeitueberweisung(false);
+//	Waren die geter und seter bevor die Datenbank eingeführt wurde.	
+//		zahlung.setEmpfaenger("Harry Mueller");
+//		zahlung.setBetrag(1000);
+//		zahlung.setVerwendungszweck("Rechnung xyz");
+//		zahlung.setEchtzeitueberweisung(false);
+//		zahlung1.setEmpfaenger("Eva Maier");
+//		zahlung1.setBetrag(2000);
+//		zahlung1.setVerwendungszweck("Mitgliedsbeitrag Reitverein");
+//		zahlung1.setEchtzeitueberweisung(true);
+//		zahlung2.setEmpfaenger("Georg Kanz");
+//		zahlung2.setBetrag(33.33f);
+//		zahlung2.setVerwendungszweck("ebay Kauf vom 11.01.22");
+//		zahlung2.setEchtzeitueberweisung(false);
 
 	
 		depot.setListe(zahlung, 0);
@@ -60,7 +59,7 @@ public class ApplicationImpl implements Application {
         //Connection zur DB
 		try (Connection con = DriverManager.getConnection(URL, user, password)) {
 			System.out.println("Verbindung erfolgreich hergestellt!");
-			testzahlung = new ZahlungDBImpl(con);
+			zahlungdbquest = new ZahlungDBImpl(con);
 			try (Statement stm = con.createStatement()) {
 
 				depot.setMessage("depot-Out");
@@ -80,14 +79,13 @@ public class ApplicationImpl implements Application {
 				// ###depotview.csvFileReader(depot1,"eingabedatei.csv");
 
 				depotview.depotAnzeige(depot1);
-testzahlung.getZahlung(2);
-testzahlung.getAll();
-testzahlung.setZahlung("Helmut Meister", 612.14f, "Rechnung Heizung Brösel", true, 4); 
-//System.out.println(testzahlung.getEmpfaenger(stm));
-//System.out.println(testzahlung.getIban(stm));
-//System.out.println(testzahlung.getBetrag(stm));
-//System.out.println(testzahlung.getVerwendungszweck(stm));
-//System.out.println(testzahlung.getEchtzeitueberweisung(stm));
+zahlung = zahlungdbquest.getZahlung(6);
+System.out.println("\nEmpfänger :" + zahlung.getEmpfaenger());
+zahlung1 = zahlungdbquest.getZahlung(7);
+System.out.println("\nBetrag: " + zahlung1.getBetrag());
+zahlungdbquest.getAll();
+//zahlung3 = new ZahlungImpl () 
+//zahlungdbquest.setZahlung("Helmut Meister", 612.14f, "Rechnung Heizung Brösel", true, 4); 
 
 
 

@@ -6,8 +6,6 @@ public interface Zahlung {
 
 	void setEmpfaenger(String empfaenger);
 
-	String getIban();
-
 	float getBetrag();
 
 	void setBetrag(float betrag);
@@ -16,12 +14,20 @@ public interface Zahlung {
 
 	void setVerwendungszweck(String verwendungszweck);
 
-	boolean isEchtzeitueberweisung();
+	boolean getEchtzeitueberweisung();
 
 	void setEchtzeitueberweisung(boolean echtzeitueberweisung);
 
-	void setIban(String iban);
-	
 	String toString();
+	
+	int getId();
+	
+	void setId(int id);
+	
+	int getIbanid();
+	
+	void setIbanid(int ibanid);
+	
+	
 
 }

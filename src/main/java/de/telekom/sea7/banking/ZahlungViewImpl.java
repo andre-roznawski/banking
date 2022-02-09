@@ -12,10 +12,10 @@ public class ZahlungViewImpl implements ZahlungView {
 		System.out.println();
 		System.out.println("Sicht Viewkonto: Zahlung "+(depot.indexOf(zahlung)+1));
 		System.out.println("Name: " + zahlung.getEmpfaenger());
-		System.out.println("IBAN: " + zahlung.getIban());
+		//System.out.println("IBAN: " + zahlung.getIban());
 		System.out.println("Betrag: " + zahlung.getBetrag());
 		System.out.println("Verwendungszweck: " + zahlung.getVerwendungszweck());
-		System.out.println("Echtzeitüberweisung? " + zahlung.isEchtzeitueberweisung());
+		System.out.println("Echtzeitüberweisung? " + zahlung.getEchtzeitueberweisung());
 	}
 
 	public Zahlung getZahlung() {
