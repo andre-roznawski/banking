@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
-
 import de.telekom.sea7.banking.base.Application;
 import de.telekom.sea7.banking.base.Depot;
 import de.telekom.sea7.banking.base.DepotView;
@@ -13,17 +12,16 @@ import de.telekom.sea7.banking.base.Zahlung;
 import de.telekom.sea7.banking.base.ZahlungView;
 //import de.telekom.sea7.banking.implementation.DepotIteratorImplTh;
 import java.sql.*;
-
 import java.util.Properties;
 
 public class ApplicationImpl implements Application {
+
 	private Depot<Zahlung> depot1 = new DepotImpl<Zahlung>();
 	private DepotView depotview = new DepotViewImpl();
 	private Zahlung zahlung = new ZahlungImpl();
 	private Zahlung zahlung1 = new ZahlungImpl();
 	private Zahlung zahlung2 = new ZahlungImpl();
-	private ZahlungDBImpl zahlungdbquest; 
-	
+	private ZahlungDBImpl zahlungdbquest;
 
 	// Variablen für die Connection
 	final String URL = "jdbc:mariadb://localhost:3306/myfirstdb";
@@ -32,7 +30,7 @@ public class ApplicationImpl implements Application {
 
 	public void initAll(Depot<Zahlung> depot) {
 
-//	Waren die geter und seter bevor die Datenbank eingeführt wurde.	
+//	Waren die seter bevor die Datenbank eingeführt wurde.	
 //		zahlung.setEmpfaenger("Harry Mueller");
 //		zahlung.setBetrag(1000);
 //		zahlung.setVerwendungszweck("Rechnung xyz");
@@ -46,17 +44,17 @@ public class ApplicationImpl implements Application {
 //		zahlung2.setVerwendungszweck("ebay Kauf vom 11.01.22");
 //		zahlung2.setEchtzeitueberweisung(false);
 
-	
 		depot.setListe(zahlung, 0);
 		depot.setListe(zahlung1, 1);
 		depot.setListe(zahlung2, 2);
 	}
 
 	public void run(String[] args) {
-		ZahlungView zahlungView = new ZahlungViewImpl();
 
+		ZahlungView zahlungView = new ZahlungViewImpl();
 		Depot<Zahlung> depot = new DepotImpl<Zahlung>();
-        //Connection zur DB
+
+		// Connection zur DB
 		try (Connection con = DriverManager.getConnection(URL, user, password)) {
 			System.out.println("Verbindung erfolgreich hergestellt!");
 			zahlungdbquest = new ZahlungDBImpl(con);
@@ -79,15 +77,13 @@ public class ApplicationImpl implements Application {
 				// ###depotview.csvFileReader(depot1,"eingabedatei.csv");
 
 				depotview.depotAnzeige(depot1);
-zahlung = zahlungdbquest.getZahlung(6);
-System.out.println("\nEmpfänger :" + zahlung.getEmpfaenger());
-zahlung1 = zahlungdbquest.getZahlung(7);
-System.out.println("\nBetrag: " + zahlung1.getBetrag());
-zahlungdbquest.getAll();
+				zahlung = zahlungdbquest.getZahlung(6);
+				System.out.println("\nEmpfänger :" + zahlung.getEmpfaenger());
+				zahlung1 = zahlungdbquest.getZahlung(7);
+				System.out.println("\nBetrag: " + zahlung1.getBetrag());
+				zahlungdbquest.getAll();
 //zahlung3 = new ZahlungImpl () 
 //zahlungdbquest.setZahlung("Helmut Meister", 612.14f, "Rechnung Heizung Brösel", true, 4); 
-
-
 
 				BankingMenu unserMenu = new BankingMenu();
 
