@@ -61,7 +61,7 @@ public class ZahlungDBImpl {
 		ZahlungImpl zahlung = new ZahlungImpl();
 		try {
 			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
-			// Zeilen.
+			// Spalten .
 			psForSelect.setInt(1, id);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,12 +120,12 @@ public class ZahlungDBImpl {
 //		}
 //		return empfaenger;
 //	}
-	
-	public void setEmpfaenger(String empfaenger, Zahlung zahlung) {
-		// if(empfaenger)
-		this.empfaenger = empfaenger;
-	}
-	// Wird nicht mehr benötigt, da weiter oben über die getZahlungen Methode bereits integriert.
+//	
+//	public void setEmpfaenger(String empfaenger, Zahlung zahlung) {
+//		// if(empfaenger)
+//		this.empfaenger = empfaenger;
+//	}
+//	// Wird nicht mehr benötigt, da weiter oben über die getZahlungen Methode bereits integriert.
 //	public int getIban_id(int id) {		
 //		try {
 //			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
