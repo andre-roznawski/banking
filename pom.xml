@@ -3,4 +3,19 @@
   <groupId>de.telekom.sea7.banking</groupId>
   <artifactId>banking</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+	</dependencies>
+  
+  
 </project>

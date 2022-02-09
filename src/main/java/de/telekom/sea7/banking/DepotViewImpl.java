@@ -41,8 +41,8 @@ public class DepotViewImpl implements DepotView {
 		for (int i = 0; i < depot.size(); i++) {
 			if (depot.getContent(i) instanceof Zahlung) {
 				Zahlung zahlung = ((Zahlung) depot.getContent(i));
-				System.out.println(String.format("%02d,%s,%s,%.2f,%s,%s", i+1, zahlung.getEmpfaenger(), zahlung.getIban(),
-						zahlung.getBetrag(), zahlung.getVerwendungszweck(), zahlung.isEchtzeitueberweisung()));
+				System.out.println(String.format("%02d,%s,%.2f,%s,%s", i+1, zahlung.getEmpfaenger(), 
+						zahlung.getBetrag(), zahlung.getVerwendungszweck(), zahlung.getEchtzeitueberweisung()));
 			}
 		}
 	}
@@ -61,9 +61,9 @@ public class DepotViewImpl implements DepotView {
 					for (int i = 0; i < depot.size(); i++) {
 						if (depot.getContent(i) instanceof Zahlung) {
 							Zahlung zahlung = ((Zahlung) depot.getContent(i));
-							line = (String.format("%02d,%s,%s,%.2f,%s,%s", i+1, zahlung.getEmpfaenger(),
-									zahlung.getIban(), zahlung.getBetrag(), zahlung.getVerwendungszweck(),
-									zahlung.isEchtzeitueberweisung()));
+							line = (String.format("%02d,%s,%.2f,%s,%s", i+1, zahlung.getEmpfaenger(),
+									zahlung.getBetrag(), zahlung.getVerwendungszweck(),
+									zahlung.getEchtzeitueberweisung()));
 							System.out.println(line);
 							f1.write(line + "\n");
 						}
@@ -95,7 +95,7 @@ public class DepotViewImpl implements DepotView {
                     
                     Zahlung zahlungIn = new ZahlungImpl();
                     zahlungIn.setEmpfaenger(zeilensplitter[1]);
-                    zahlungIn.setIban(zeilensplitter[2]);
+                    //zahlungIn.setIban(zeilensplitter[2]);
                     zahlungIn.setBetrag(Float.parseFloat(zeilensplitter[3]));
                     zahlungIn.setVerwendungszweck(zeilensplitter[4]);
                     zahlungIn.setEchtzeitueberweisung(Boolean.parseBoolean(zeilensplitter[5]));
