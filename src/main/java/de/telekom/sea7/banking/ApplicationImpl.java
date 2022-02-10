@@ -82,9 +82,16 @@ public class ApplicationImpl implements Application {
 				zahlung1 = zahlungdbquest.getZahlung(7);
 				System.out.println("\nBetrag: " + zahlung1.getBetrag());
 				zahlungdbquest.getAll();
-//zahlung3 = new ZahlungImpl () 
-//zahlungdbquest.setZahlung("Helmut Meister", 612.14f, "Rechnung Heizung Brösel", true, 4); 
-
+				zahlung = zahlungdbquest.getZahlung(8);
+				zahlung.setEmpfaenger("Erika Berger");
+				zahlungdbquest.saveZahlung(zahlung); 
+				zahlung = zahlungdbquest.getZahlung(8);
+				
+//				Zahlung zahlung3 = new ZahlungImpl(0, "Katrin Roznawski", 111.50f, "Aldi Einkauf", false, 4); 
+//                zahlungdbquest.saveZahlung(zahlung3); 
+//                zahlungdbquest.getZahlung(9);
+                
+                
 				BankingMenu unserMenu = new BankingMenu();
 
 				while (true) {

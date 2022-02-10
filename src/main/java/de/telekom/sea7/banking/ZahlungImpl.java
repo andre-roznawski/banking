@@ -4,19 +4,29 @@ import de.telekom.sea7.banking.base.Zahlung;
 
 public class ZahlungImpl implements Zahlung {
 
-	private int id;
+	private int zahlung_id;
 	private String empfaenger;
 	private float betrag;
 	private String verwendungszweck;
 	private boolean echtzeitueberweisung;
 	private int ibanid;
 	
-	public int getId() {
-		return id;
+//	public ZahlungImpl() {
+//		super();
+//		this.zahlung_id = zahlung_id;
+//		this.empfaenger = empfaenger;
+//		this.betrag = betrag;
+//		this.verwendungszweck = verwendungszweck;
+//		this.echtzeitueberweisung = echtzeitueberweisung;
+//		this.ibanid = ibanid;
+//	}
+
+	public int getZahlung_Id() {
+		return zahlung_id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setZahlung_Id(int zahlung_id) {
+		this.zahlung_id = zahlung_id;
 	}
 
 	public int getIbanid() {
@@ -61,8 +71,24 @@ public class ZahlungImpl implements Zahlung {
 	}
 
 	public String toString() {
-		return id +" "+ empfaenger +" "+ betrag + "€ "+" "+ verwendungszweck +"  "+ echtzeitueberweisung +" "+ ibanid;
+		return zahlung_id +" " + empfaenger +" "+ betrag + "€ "+" "+ verwendungszweck +"  "+ echtzeitueberweisung +" "+ ibanid;
 	}
+
+	/* Muss ich machen, da wir uns einen eigenen Konstruktor gebaut haben. */
+	public ZahlungImpl() {
+    	
+	}
+
+	
+	public ZahlungImpl(int zahlung_id, String empfaenger, float betrag, String verwendungszweck,
+			boolean echtzeitueberweisung, int ibanid) {
+		this.zahlung_id = zahlung_id;
+		this.empfaenger = empfaenger;
+		this.betrag = betrag;
+		this.verwendungszweck = verwendungszweck;
+		this.echtzeitueberweisung = echtzeitueberweisung;
+		this.ibanid = ibanid;
+		}
 
 	
 	

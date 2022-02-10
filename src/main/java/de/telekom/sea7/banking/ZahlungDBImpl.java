@@ -2,23 +2,26 @@ package de.telekom.sea7.banking;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import de.telekom.sea7.banking.base.Zahlung;
+
 import java.sql.*;
 
 public class ZahlungDBImpl {
     private ZahlungImpl zahlung; 
     //Wird nicht mehr benötigt, da in der ZahlungImpl.java vorhanden.
-	private String empfaenger;
-	private String iban;
-	private float betrag;
-	private String verwendungszweck;
-	private boolean echtzeitueberweisung;
-	private int iban_id;
+//	private String empfaenger;
+//	private String iban;
+//	private float betrag;
+//	private String verwendungszweck;
+//	private boolean echtzeitueberweisung;
+//	private int iban_id;
 	private Connection con;
 
 	String sqlForInsert = "INSERT INTO zahlungen (Empfaenger, Betrag, Verwendungszweck, Echtzeitueberweisung, iban_id) VALUES ( ?, ? ,?, ?, ?)";
 	String sqlForSelect = "SELECT * FROM zahlungen WHERE ZahlungID = ?";
 	String sqlForAll = "SELECT * FROM zahlungen";
-	String sqlForUpdate = "UPDATE  zahlungen set ? = ? WHERE ZahlungID = ? ";
+	String sqlForUpdate = "UPDATE zahlungen set Empfaenger = ?, Betrag = ?, Verwendungszweck = ?, Echtzeitueberweisung = ?, iban_id = ? WHERE ZahlungID = ? ";
 	
 	private PreparedStatement psForInsert;
 	private PreparedStatement psForSelect;
@@ -34,24 +37,59 @@ public class ZahlungDBImpl {
 		psForUpdate = con.prepareStatement(sqlForUpdate);
 	}
 
-	public void setZahlung(String empfaenger, float betrag, String verwendungszweck, boolean echtzeitueberweisung,
-			int iban_id) {
+	public void saveZahlung(Zahlung zahlung) {
+		
+		if(zahlung.getZahlung_Id()==0) {
+			setZahlung(zahlung);
+		}
+		else {
+			updateZahlung(zahlung);
+		}
+	}
+		
+	public void updateZahlung(Zahlung zahlung) {
 		try {
 			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
 			// Zeilen.
-			psForInsert.setString(1, empfaenger);
-			psForInsert.setFloat(2, betrag);
-			psForInsert.setString(3, verwendungszweck);
-			psForInsert.setBoolean(4, echtzeitueberweisung);
-			psForInsert.setInt(5, iban_id);
+			psForUpdate.setString(1, zahlung.getEmpfaenger());
+			psForUpdate.setFloat(2, zahlung.getBetrag());
+			psForUpdate.setString(3, zahlung.getVerwendungszweck());
+			psForUpdate.setBoolean(4, zahlung.getEchtzeitueberweisung());
+			psForUpdate.setInt(5, zahlung.getIbanid());
+			psForUpdate.setInt(6, zahlung.getZahlung_Id());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			int rows = psForUpdate.executeUpdate();
+			System.out.println("\nDas ist ein erfolgreiches Update auf Zahlungen von: " + rows + "Datensaetzen");
+			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", zahlung.getEmpfaenger(), zahlung.getBetrag(), zahlung.getVerwendungszweck(),
+					zahlung.getEchtzeitueberweisung(), zahlung.getIbanid()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	
+	
+	public void setZahlung(Zahlung zahlung) {
+		try {
+			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
+			// Zeilen.
+			psForInsert.setString(1, zahlung.getEmpfaenger());
+			psForInsert.setFloat(2, zahlung.getBetrag());
+			psForInsert.setString(3, zahlung.getVerwendungszweck());
+			psForInsert.setBoolean(4, zahlung.getEchtzeitueberweisung());
+			psForInsert.setInt(5, zahlung.getIbanid());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		try {
 			int rows = psForInsert.executeUpdate();
 			System.out.println("\nDas ist ein erfolgreiches Update auf Zahlungen von: " + rows + "Datensaetzen");
-			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", empfaenger, betrag, verwendungszweck,
-					echtzeitueberweisung, iban_id));
+			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", zahlung.getEmpfaenger(), zahlung.getBetrag(), zahlung.getVerwendungszweck(),
+					zahlung.getEchtzeitueberweisung(), zahlung.getIbanid()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +110,7 @@ public class ZahlungDBImpl {
 				System.out.println(String.format("%5s|%30s|%10s €|%40s|%8s", rs.getString(1), rs.getString(2),
 						rs.getString(3), rs.getString(4), rs.getString(5)));
 				int id1 = rs.getInt(1);
-				zahlung.setId(id1);
+				zahlung.setZahlung_Id(id1);				
 				String empfaenger = rs.getString(2);
 				zahlung.setEmpfaenger(empfaenger);
 				float betrag = rs.getFloat(3);
@@ -164,9 +202,9 @@ public class ZahlungDBImpl {
 //		return betrag;
 //	}
 //				
-	public void setBetrag(float betrag) {
-		this.betrag = betrag;
-	}
+//	public void setBetrag(float betrag) {
+//		this.betrag = betrag;
+//	}
 // Wird nicht mehr benötigt, da weiter oben über die getZahlungen Methode bereits integriert.
 //	public String getVerwendungszweck(int id) {
 //		try {
@@ -186,10 +224,10 @@ public class ZahlungDBImpl {
 //		}
 //		return verwendungszweck;
 //	}
-		
-	public void setVerwendungszweck(String verwendungszweck) {
-		this.verwendungszweck = verwendungszweck;
-	}
+//		
+//	public void setVerwendungszweck(String verwendungszweck) {
+//		this.verwendungszweck = verwendungszweck;
+//	}
 // Wird nicht mehr benötigt, da weiter oben über die getZahlungen Methode bereits integriert.
 //	public boolean getEchtzeitueberweisung(int id) {
 //		try {
@@ -212,6 +250,6 @@ public class ZahlungDBImpl {
 		
 
 	public String toString() {
-		return zahlung.getId() + " " + zahlung.getEmpfaenger() + " " + zahlung.getBetrag() + " € " + zahlung.getVerwendungszweck()+ " " + zahlung.getEchtzeitueberweisung() + " " + zahlung.getIbanid();
+		return zahlung.getZahlung_Id() + " " + zahlung.getEmpfaenger() + " " + zahlung.getBetrag() + " € " + zahlung.getVerwendungszweck()+ " " + zahlung.getEchtzeitueberweisung() + " " + zahlung.getIbanid();
 					}
 }

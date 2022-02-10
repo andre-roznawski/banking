@@ -20,9 +20,9 @@ public interface Zahlung {
 
 	String toString();
 	
-	int getId();
+	int getZahlung_Id();
 	
-	void setId(int id);
+	void setZahlung_Id(int zahlung_id);
 	
 	int getIbanid();
 	
