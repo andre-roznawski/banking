@@ -8,6 +8,7 @@ import java.util.Iterator;
 import de.telekom.sea7.banking.base.Application;
 import de.telekom.sea7.banking.base.Depot;
 import de.telekom.sea7.banking.base.DepotView;
+import de.telekom.sea7.banking.base.Iban;
 import de.telekom.sea7.banking.base.Zahlung;
 import de.telekom.sea7.banking.base.ZahlungView;
 //import de.telekom.sea7.banking.implementation.DepotIteratorImplTh;
@@ -21,7 +22,9 @@ public class ApplicationImpl implements Application {
 	private Zahlung zahlung = new ZahlungImpl();
 	private Zahlung zahlung1 = new ZahlungImpl();
 	private Zahlung zahlung2 = new ZahlungImpl();
-	private ZahlungDBImpl zahlungdbquest;
+	private ZahlungRepositoryImpl zahlungdbquest;
+	private IbanRepositoryImpl ibandbquest;
+	private Iban iban1 = new IbanImpl();
 
 	// Variablen für die Connection
 	final String URL = "jdbc:mariadb://localhost:3306/myfirstdb";
@@ -57,7 +60,9 @@ public class ApplicationImpl implements Application {
 		// Connection zur DB
 		try (Connection con = DriverManager.getConnection(URL, user, password)) {
 			System.out.println("Verbindung erfolgreich hergestellt!");
-			zahlungdbquest = new ZahlungDBImpl(con);
+			ibandbquest = new IbanRepositoryImpl(con);
+			zahlungdbquest = new ZahlungRepositoryImpl(con);
+			zahlungdbquest.setIbandbquest(ibandbquest);
 			try (Statement stm = con.createStatement()) {
 
 				depot.setMessage("depot-Out");
@@ -82,9 +87,21 @@ public class ApplicationImpl implements Application {
 				zahlung1 = zahlungdbquest.getZahlung(7);
 				System.out.println("\nBetrag: " + zahlung1.getBetrag());
 				zahlungdbquest.getAll();
-//zahlung3 = new ZahlungImpl () 
-//zahlungdbquest.setZahlung("Helmut Meister", 612.14f, "Rechnung Heizung Brösel", true, 4); 
-
+				zahlung = zahlungdbquest.getZahlung(8);
+				zahlung.setEmpfaenger("Erika Berger");
+				zahlungdbquest.saveZahlung(zahlung); 
+				zahlung1 = zahlungdbquest.getZahlung(3);
+				//iban1 = ibandbquest.getIban(zahlung1.getIbanid());
+				//ibandbquest.getAll();
+				zahlung1.getIban().getIban_id();
+				
+				
+				
+//				Zahlung zahlung3 = new ZahlungImpl(0, "Katrin Roznawski", 111.50f, "Aldi Einkauf", false, 4); 
+//                zahlungdbquest.saveZahlung(zahlung3); 
+//                zahlungdbquest.getZahlung(9);
+                
+                
 				BankingMenu unserMenu = new BankingMenu();
 
 				while (true) {
