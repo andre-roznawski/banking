@@ -8,6 +8,7 @@ import java.util.Iterator;
 import de.telekom.sea7.banking.base.Application;
 import de.telekom.sea7.banking.base.Depot;
 import de.telekom.sea7.banking.base.DepotView;
+import de.telekom.sea7.banking.base.Iban;
 import de.telekom.sea7.banking.base.Zahlung;
 import de.telekom.sea7.banking.base.ZahlungView;
 //import de.telekom.sea7.banking.implementation.DepotIteratorImplTh;
@@ -21,7 +22,9 @@ public class ApplicationImpl implements Application {
 	private Zahlung zahlung = new ZahlungImpl();
 	private Zahlung zahlung1 = new ZahlungImpl();
 	private Zahlung zahlung2 = new ZahlungImpl();
-	private ZahlungDBImpl zahlungdbquest;
+	private ZahlungRepositoryImpl zahlungdbquest;
+	private IbanRepositoryImpl ibandbquest;
+	private Iban iban1 = new IbanImpl();
 
 	// Variablen für die Connection
 	final String URL = "jdbc:mariadb://localhost:3306/myfirstdb";
@@ -57,7 +60,8 @@ public class ApplicationImpl implements Application {
 		// Connection zur DB
 		try (Connection con = DriverManager.getConnection(URL, user, password)) {
 			System.out.println("Verbindung erfolgreich hergestellt!");
-			zahlungdbquest = new ZahlungDBImpl(con);
+			zahlungdbquest = new ZahlungRepositoryImpl(con);
+			ibandbquest = new IbanRepositoryImpl(con);
 			try (Statement stm = con.createStatement()) {
 
 				depot.setMessage("depot-Out");
@@ -86,6 +90,10 @@ public class ApplicationImpl implements Application {
 				zahlung.setEmpfaenger("Erika Berger");
 				zahlungdbquest.saveZahlung(zahlung); 
 				zahlung = zahlungdbquest.getZahlung(8);
+				iban1 = ibandbquest.getIban(3);
+				ibandbquest.getAll();
+				
+				
 				
 //				Zahlung zahlung3 = new ZahlungImpl(0, "Katrin Roznawski", 111.50f, "Aldi Einkauf", false, 4); 
 //                zahlungdbquest.saveZahlung(zahlung3); 

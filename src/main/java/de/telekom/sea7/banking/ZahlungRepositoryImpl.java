@@ -7,7 +7,7 @@ import de.telekom.sea7.banking.base.Zahlung;
 
 import java.sql.*;
 
-public class ZahlungDBImpl {
+public class ZahlungRepositoryImpl {
     private ZahlungImpl zahlung; 
     //Wird nicht mehr benötigt, da in der ZahlungImpl.java vorhanden.
 //	private String empfaenger;
@@ -28,7 +28,7 @@ public class ZahlungDBImpl {
 	private PreparedStatement psForAll;
 	private PreparedStatement psForUpdate;
 
-	public ZahlungDBImpl(Connection con) throws SQLException {
+	public ZahlungRepositoryImpl(Connection con) throws SQLException {
 		this.con = con;
 
 		psForInsert = con.prepareStatement(sqlForInsert);
