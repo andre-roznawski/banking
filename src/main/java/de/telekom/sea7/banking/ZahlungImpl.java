@@ -1,5 +1,6 @@
 package de.telekom.sea7.banking;
 
+import de.telekom.sea7.banking.base.Iban;
 import de.telekom.sea7.banking.base.Zahlung;
 
 public class ZahlungImpl implements Zahlung {
@@ -10,17 +11,33 @@ public class ZahlungImpl implements Zahlung {
 	private String verwendungszweck;
 	private boolean echtzeitueberweisung;
 	private int ibanid;
+	private Iban iban;
 	
-//	public ZahlungImpl() {
-//		super();
-//		this.zahlung_id = zahlung_id;
-//		this.empfaenger = empfaenger;
-//		this.betrag = betrag;
-//		this.verwendungszweck = verwendungszweck;
-//		this.echtzeitueberweisung = echtzeitueberweisung;
-//		this.ibanid = ibanid;
-//	}
+	/* Muss ich machen, da wir uns einen eigenen Konstruktor gebaut haben. */
+	public ZahlungImpl() {
+    	
+	}
+	
+	public ZahlungImpl(int zahlung_id, String empfaenger, float betrag, String verwendungszweck,
+			boolean echtzeitueberweisung, int ibanid) {
+		this.zahlung_id = zahlung_id;
+		this.empfaenger = empfaenger;
+		this.betrag = betrag;
+		this.verwendungszweck = verwendungszweck;
+		this.echtzeitueberweisung = echtzeitueberweisung;
+		this.ibanid = ibanid;
+		}
 
+	public Iban getIban() {
+		return iban;
+	}
+
+	public void setIban(Iban iban) {
+		this.iban = iban;
+	}
+	
+	
+	
 	public int getZahlung_Id() {
 		return zahlung_id;
 	}
@@ -73,23 +90,4 @@ public class ZahlungImpl implements Zahlung {
 	public String toString() {
 		return zahlung_id +" " + empfaenger +" "+ betrag + "€ "+" "+ verwendungszweck +"  "+ echtzeitueberweisung +" "+ ibanid;
 	}
-
-	/* Muss ich machen, da wir uns einen eigenen Konstruktor gebaut haben. */
-	public ZahlungImpl() {
-    	
-	}
-
-	
-	public ZahlungImpl(int zahlung_id, String empfaenger, float betrag, String verwendungszweck,
-			boolean echtzeitueberweisung, int ibanid) {
-		this.zahlung_id = zahlung_id;
-		this.empfaenger = empfaenger;
-		this.betrag = betrag;
-		this.verwendungszweck = verwendungszweck;
-		this.echtzeitueberweisung = echtzeitueberweisung;
-		this.ibanid = ibanid;
-		}
-
-	
-	
 }

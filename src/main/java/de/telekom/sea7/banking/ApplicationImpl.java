@@ -60,8 +60,9 @@ public class ApplicationImpl implements Application {
 		// Connection zur DB
 		try (Connection con = DriverManager.getConnection(URL, user, password)) {
 			System.out.println("Verbindung erfolgreich hergestellt!");
-			zahlungdbquest = new ZahlungRepositoryImpl(con);
 			ibandbquest = new IbanRepositoryImpl(con);
+			zahlungdbquest = new ZahlungRepositoryImpl(con);
+			zahlungdbquest.setIbandbquest(ibandbquest);
 			try (Statement stm = con.createStatement()) {
 
 				depot.setMessage("depot-Out");
@@ -89,9 +90,10 @@ public class ApplicationImpl implements Application {
 				zahlung = zahlungdbquest.getZahlung(8);
 				zahlung.setEmpfaenger("Erika Berger");
 				zahlungdbquest.saveZahlung(zahlung); 
-				zahlung = zahlungdbquest.getZahlung(8);
-				iban1 = ibandbquest.getIban(3);
-				ibandbquest.getAll();
+				zahlung1 = zahlungdbquest.getZahlung(3);
+				//iban1 = ibandbquest.getIban(zahlung1.getIbanid());
+				//ibandbquest.getAll();
+				zahlung1.getIban().getIban_id();
 				
 				
 				

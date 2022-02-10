@@ -28,6 +28,10 @@ public interface Zahlung {
 	
 	void setIbanid(int ibanid);
 	
+	Iban getIban();
+	
+	void setIban(Iban iban);
+	
 	
 
 }

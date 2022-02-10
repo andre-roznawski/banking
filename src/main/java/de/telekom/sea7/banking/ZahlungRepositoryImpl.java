@@ -3,13 +3,14 @@ package de.telekom.sea7.banking;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import de.telekom.sea7.banking.base.Iban;
 import de.telekom.sea7.banking.base.Zahlung;
 
 import java.sql.*;
 
 public class ZahlungRepositoryImpl {
-    private ZahlungImpl zahlung; 
-    //Wird nicht mehr benötigt, da in der ZahlungImpl.java vorhanden.
+	private ZahlungImpl zahlung;
+	// Wird nicht mehr benötigt, da in der ZahlungImpl.java vorhanden.
 //	private String empfaenger;
 //	private String iban;
 //	private float betrag;
@@ -17,12 +18,13 @@ public class ZahlungRepositoryImpl {
 //	private boolean echtzeitueberweisung;
 //	private int iban_id;
 	private Connection con;
+	private IbanRepositoryImpl ibandbquest;
 
 	String sqlForInsert = "INSERT INTO zahlungen (Empfaenger, Betrag, Verwendungszweck, Echtzeitueberweisung, iban_id) VALUES ( ?, ? ,?, ?, ?)";
 	String sqlForSelect = "SELECT * FROM zahlungen WHERE ZahlungID = ?";
 	String sqlForAll = "SELECT * FROM zahlungen";
 	String sqlForUpdate = "UPDATE zahlungen set Empfaenger = ?, Betrag = ?, Verwendungszweck = ?, Echtzeitueberweisung = ?, iban_id = ? WHERE ZahlungID = ? ";
-	
+
 	private PreparedStatement psForInsert;
 	private PreparedStatement psForSelect;
 	private PreparedStatement psForAll;
@@ -38,15 +40,14 @@ public class ZahlungRepositoryImpl {
 	}
 
 	public void saveZahlung(Zahlung zahlung) {
-		
-		if(zahlung.getZahlung_Id()==0) {
+
+		if (zahlung.getZahlung_Id() == 0) {
 			setZahlung(zahlung);
-		}
-		else {
+		} else {
 			updateZahlung(zahlung);
 		}
 	}
-		
+
 	public void updateZahlung(Zahlung zahlung) {
 		try {
 			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
@@ -63,16 +64,13 @@ public class ZahlungRepositoryImpl {
 		try {
 			int rows = psForUpdate.executeUpdate();
 			System.out.println("\nDas ist ein erfolgreiches Update auf Zahlungen von: " + rows + "Datensaetzen");
-			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", zahlung.getEmpfaenger(), zahlung.getBetrag(), zahlung.getVerwendungszweck(),
-					zahlung.getEchtzeitueberweisung(), zahlung.getIbanid()));
+			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", zahlung.getEmpfaenger(), zahlung.getBetrag(),
+					zahlung.getVerwendungszweck(), zahlung.getEchtzeitueberweisung(), zahlung.getIbanid()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	
-	
 	public void setZahlung(Zahlung zahlung) {
 		try {
 			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
@@ -88,8 +86,8 @@ public class ZahlungRepositoryImpl {
 		try {
 			int rows = psForInsert.executeUpdate();
 			System.out.println("\nDas ist ein erfolgreiches Update auf Zahlungen von: " + rows + "Datensaetzen");
-			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", zahlung.getEmpfaenger(), zahlung.getBetrag(), zahlung.getVerwendungszweck(),
-					zahlung.getEchtzeitueberweisung(), zahlung.getIbanid()));
+			System.out.println(String.format("%30s,%7.2f,%30s,%8s,%2d", zahlung.getEmpfaenger(), zahlung.getBetrag(),
+					zahlung.getVerwendungszweck(), zahlung.getEchtzeitueberweisung(), zahlung.getIbanid()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -106,11 +104,8 @@ public class ZahlungRepositoryImpl {
 		}
 		try (ResultSet rs = psForSelect.executeQuery()) {
 			while (rs.next()) {
-				System.out.println("ID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung");
-				System.out.println(String.format("%5s|%30s|%10s €|%40s|%8s", rs.getString(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getString(5)));
 				int id1 = rs.getInt(1);
-				zahlung.setZahlung_Id(id1);				
+				zahlung.setZahlung_Id(id1);
 				String empfaenger = rs.getString(2);
 				zahlung.setEmpfaenger(empfaenger);
 				float betrag = rs.getFloat(3);
@@ -121,7 +116,14 @@ public class ZahlungRepositoryImpl {
 				zahlung.setEchtzeitueberweisung(echtzeitueberweisung);
 				int ibanid = rs.getInt(6);
 				zahlung.setIbanid(ibanid);
-				}
+				Iban iban = null;
+				iban = ibandbquest.getIban(ibanid);
+				zahlung.setIban(iban);
+				System.out.println(
+						"ID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung      |IBAN");
+				System.out.println(String.format("%5s|%-30s|%10s €|%-40s|%25s|%-15s", id1, empfaenger, betrag,
+						verwendungszweck, echtzeitueberweisung, iban.getIban()));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -130,7 +132,8 @@ public class ZahlungRepositoryImpl {
 
 	public void getAll() {
 		try (ResultSet rs = psForAll.executeQuery()) {
-			System.out.println("\nID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung");
+			System.out.println(
+					"\nID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung");
 			while (rs.next()) {
 				System.out.println(String.format("%5s|%30s|%10s €|%40s|%8s", rs.getString(1), rs.getString(2),
 						rs.getString(3), rs.getString(4), rs.getString(5)));
@@ -182,7 +185,8 @@ public class ZahlungRepositoryImpl {
 //		}
 //		return iban_id;
 //	}
-	// Wird nicht mehr benötigt, da weiter oben über die getZahlungen Methode bereits integriert.	
+	// Wird nicht mehr benötigt, da weiter oben über die getZahlungen Methode
+	// bereits integriert.
 //	public float getBetrag(int id) {
 //		try {
 //			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
@@ -247,9 +251,14 @@ public class ZahlungRepositoryImpl {
 //		}
 //		return echtzeitueberweisung;
 //	}
-		
 
 	public String toString() {
-		return zahlung.getZahlung_Id() + " " + zahlung.getEmpfaenger() + " " + zahlung.getBetrag() + " € " + zahlung.getVerwendungszweck()+ " " + zahlung.getEchtzeitueberweisung() + " " + zahlung.getIbanid();
-					}
+		return zahlung.getZahlung_Id() + " " + zahlung.getEmpfaenger() + " " + zahlung.getBetrag() + " € "
+				+ zahlung.getVerwendungszweck() + " " + zahlung.getEchtzeitueberweisung() + " " + zahlung.getIbanid();
+	}
+
+	public void setIbandbquest(IbanRepositoryImpl ibandbquest) {
+		this.ibandbquest = ibandbquest;
+
+	}
 }
