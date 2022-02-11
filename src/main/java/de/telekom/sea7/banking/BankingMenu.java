@@ -5,19 +5,14 @@ import de.telekom.sea7.banking.base.Application;
 import de.telekom.sea7.banking.base.Depot;
 
 public class BankingMenu {
-
-	// public void mainShow() {
+	
+	//Erzeugen eines Obkjekts vom Typ Scanner
+	Scanner scanner = new Scanner(System.in);
+	
 	public String mainShow(Application appParent, Depot depot1) {
-		// ###Zu
-		// ((Application) app).;
-		// Demo appParent.initAll(depot1);
-		// appParent.run(null);
-		// appParent.depotview.depotAnzeige(depot1);
-		Scanner scanner = new Scanner(System.in);
-
+		
 		System.out.println("Anzeige aller Zahlungen: 1");
 		System.out.println("Anzeige der Zahlung mit der ID 6: 2");
-
 		System.out.println("CSV-Datei-Anzeige: 3");
 		System.out.println("CSV-Datei vom Depot Schreiben: 4");
 		System.out.println("CSV-Datei Lesen: 5");

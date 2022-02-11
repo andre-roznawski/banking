@@ -5,31 +5,29 @@ import de.telekom.sea7.banking.base.Zahlung;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="zahlungen")
+@Table(name = "zahlungen")
 public class ZahlungImpl implements Zahlung {
 
-	
-@Id
+	@Id
 	private int zahlung_id;
-@Column(name ="Empfaenger")
+	@Column(name = "Empfaenger")
 	private String empfaenger;
-@Column(name ="Betrag")
+	@Column(name = "Betrag")
 	private float betrag;
-@Column(name ="Verwendungszweck")	
+	@Column(name = "Verwendungszweck")
 	private String verwendungszweck;
-@Column(name ="Echtzeitueberweisung")	
+	@Column(name = "Echtzeitueberweisung")
 	private boolean echtzeitueberweisung;
-@Column(name ="iban_id")	
+	@Column(name = "iban_id")
 	private int ibanid;
-@ManyToOne
+	@ManyToOne
 	private Iban iban;
-	
-	
-	/* Muss ich machen, da wir uns einen eigenen Konstruktor gebaut haben. */
+
+	// Muss ich machen, da wir uns einen eigenen Konstruktor gebaut haben.
 	public ZahlungImpl() {
-    	
 	}
-	
+
+	// selbst gebauter Konstruktor
 	public ZahlungImpl(int zahlung_id, String empfaenger, float betrag, String verwendungszweck,
 			boolean echtzeitueberweisung, int ibanid) {
 		this.zahlung_id = zahlung_id;
@@ -38,8 +36,9 @@ public class ZahlungImpl implements Zahlung {
 		this.verwendungszweck = verwendungszweck;
 		this.echtzeitueberweisung = echtzeitueberweisung;
 		this.ibanid = ibanid;
-		}
+	}
 
+	// Methode "getIban" mit Rückgabewert Iban. Variable iban vom Typ Iban wurde oben deklariert.
 	public Iban getIban() {
 		return iban;
 	}
@@ -47,9 +46,7 @@ public class ZahlungImpl implements Zahlung {
 	public void setIban(Iban iban) {
 		this.iban = iban;
 	}
-	
-	
-	
+    
 	public int getZahlung_Id() {
 		return zahlung_id;
 	}
@@ -71,11 +68,10 @@ public class ZahlungImpl implements Zahlung {
 	}
 
 	public void setEmpfaenger(String empfaenger) {
-		// if(empfaenger)
 		this.empfaenger = empfaenger;
 	}
 
-		public float getBetrag() {
+	public float getBetrag() {
 		return betrag;
 	}
 
@@ -100,6 +96,7 @@ public class ZahlungImpl implements Zahlung {
 	}
 
 	public String toString() {
-		return zahlung_id +" " + empfaenger +" "+ betrag + "€ "+" "+ verwendungszweck +"  "+ echtzeitueberweisung +" "+ ibanid;
+		return zahlung_id + " " + empfaenger + " " + betrag + "€ " + " " + verwendungszweck + "  "
+				+ echtzeitueberweisung + " " + ibanid;
 	}
 }

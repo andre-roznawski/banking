@@ -9,17 +9,18 @@ public class IbanRepositoryImpl {
 	
 	private IbanImpl iban; 
    	private Connection con;
+	//private PreparedStatement psForInsert;
+	private PreparedStatement psForSelect;
+	private PreparedStatement psForAll;
+	//private PreparedStatement psForUpdate;
+   	
 
 	//String sqlForInsert = "INSERT INTO zahlungen (Empfaenger, Betrag, Verwendungszweck, Echtzeitueberweisung, iban_id) VALUES ( ?, ? ,?, ?, ?)";
 	String sqlForSelect = "SELECT * FROM iban WHERE id = ?";
 	String sqlForAll = "SELECT * FROM iban";
 	//String sqlForUpdate = "UPDATE zahlungen set Empfaenger = ?, Betrag = ?, Verwendungszweck = ?, Echtzeitueberweisung = ?, iban_id = ? WHERE ZahlungID = ? ";
-	
-	//private PreparedStatement psForInsert;
-	private PreparedStatement psForSelect;
-	private PreparedStatement psForAll;
-	//private PreparedStatement psForUpdate;
-
+		
+	//Konstruktor
 	public IbanRepositoryImpl(Connection con) throws SQLException {
 		this.con = con;
 
@@ -31,8 +32,7 @@ public class IbanRepositoryImpl {
 	public IbanImpl getIban(int id) {
 		IbanImpl iban = new IbanImpl();
 		try {
-			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
-			// Spalten .
+			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche Spalten .
 			psForSelect.setInt(1, id);
 		} catch (SQLException e) {
 			e.printStackTrace();

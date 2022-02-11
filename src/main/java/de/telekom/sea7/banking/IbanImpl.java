@@ -16,10 +16,11 @@ public class IbanImpl implements Iban {
 	@Column(name ="IbanNR")
 	private String iban;
 	
+	//Standartkonstruktor, muss eingefügt werden, da wir einen eigenen geschrieben haben.
 	public IbanImpl() {
-		
 	}
 	
+	//Selbst geschriebener Konstruktor. 
 	public IbanImpl(int iban_id, String iban) {
 		this.iban_id = iban_id;
 		this.iban = iban;

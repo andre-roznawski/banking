@@ -116,11 +116,6 @@ public class DepotViewImpl implements DepotView {
     } 
 }
 
-// Stunde,Montag,Dienstag,Mittwoch,Donnerstag,Freitag
-// 1,Mathematik,Deutsch,Englisch,Erdkunde,Politik
-// 2,Sport,Deutsch,Englisch,Sport,Geschichte
-// 3,Sport,"Religion (ev., kath.)",Kunst,,Kunst
-
 // System.out.println("Sicht Depotkonto: " +zahlung.getEmpfaenger()+ " " +
 // zahlung.getIban()+" "+zahlung.getBetrag());
 // System.out.println("Name: "+zahlung.getEmpfaenger());
