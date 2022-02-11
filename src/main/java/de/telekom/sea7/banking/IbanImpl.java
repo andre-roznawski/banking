@@ -1,10 +1,19 @@
 package de.telekom.sea7.banking;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.*;
+
 import de.telekom.sea7.banking.base.Iban;
 
+@Entity
+@Table(name ="iban")
 public class IbanImpl implements Iban {
-	
+
+@Id
 	private int iban_id;
+	@Column(name ="IbanNR")
 	private String iban;
 	
 	public IbanImpl() {

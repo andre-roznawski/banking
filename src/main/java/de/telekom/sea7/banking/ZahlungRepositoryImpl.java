@@ -22,9 +22,10 @@ public class ZahlungRepositoryImpl {
 
 	String sqlForInsert = "INSERT INTO zahlungen (Empfaenger, Betrag, Verwendungszweck, Echtzeitueberweisung, iban_id) VALUES ( ?, ? ,?, ?, ?)";
 	String sqlForSelect = "SELECT * FROM zahlungen WHERE ZahlungID = ?";
-	String sqlForAll = "SELECT * FROM zahlungen";
+	String sqlForAll = "SELECT z.ZahlungID, z.Empfaenger, z.Betrag, z.Verwendungszweck, z.Echtzeitueberweisung, i.IbanNR  from zahlungen z left join iban i on z.iban_id = i.id";
+	//String sqlForAll = "SELECT * FROM zahlungen";
 	String sqlForUpdate = "UPDATE zahlungen set Empfaenger = ?, Betrag = ?, Verwendungszweck = ?, Echtzeitueberweisung = ?, iban_id = ? WHERE ZahlungID = ? ";
-
+		
 	private PreparedStatement psForInsert;
 	private PreparedStatement psForSelect;
 	private PreparedStatement psForAll;
@@ -42,7 +43,7 @@ public class ZahlungRepositoryImpl {
 	public void saveZahlung(Zahlung zahlung) {
 
 		if (zahlung.getZahlung_Id() == 0) {
-			setZahlung(zahlung);
+			addZahlung(zahlung);
 		} else {
 			updateZahlung(zahlung);
 		}
@@ -71,7 +72,7 @@ public class ZahlungRepositoryImpl {
 		}
 	}
 
-	public void setZahlung(Zahlung zahlung) {
+	public void addZahlung(Zahlung zahlung) {
 		try {
 			// 1 bedeutet das erste Fragezeichen, bei weiteren Fragezeichen, zusätzliche
 			// Zeilen.
@@ -120,8 +121,8 @@ public class ZahlungRepositoryImpl {
 				iban = ibandbquest.getIban(ibanid);
 				zahlung.setIban(iban);
 				System.out.println(
-						"ID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung      |IBAN");
-				System.out.println(String.format("%5s|%-30s|%10s €|%-40s|%25s|%-15s", id1, empfaenger, betrag,
+						"ID   |Empfänger                     |Betrag      |Verwendungszweck                  |Echtzeitüberweisung      |IBAN-Nr");
+				System.out.println(String.format("%5s|%-30s|%10s €|%-40s|%19s|%-15s", id1, empfaenger, betrag,
 						verwendungszweck, echtzeitueberweisung, iban.getIban()));
 			}
 		} catch (SQLException e) {
@@ -133,10 +134,10 @@ public class ZahlungRepositoryImpl {
 	public void getAll() {
 		try (ResultSet rs = psForAll.executeQuery()) {
 			System.out.println(
-					"\nID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung");
+					"\nID   |Empfänger                     |Betrag      |Verwendungszweck                        |Echtzeitüberweisung|IBAN-NR");
 			while (rs.next()) {
-				System.out.println(String.format("%5s|%30s|%10s €|%40s|%8s", rs.getString(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getString(5)));
+				System.out.println(String.format("%5s|%30s|%10s €|%40s|%19s|%17s", rs.getString(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

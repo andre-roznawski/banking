@@ -33,23 +33,9 @@ public class ApplicationImpl implements Application {
 
 	public void initAll(Depot<Zahlung> depot) {
 
-//	Waren die seter bevor die Datenbank eingeführt wurde.	
-//		zahlung.setEmpfaenger("Harry Mueller");
-//		zahlung.setBetrag(1000);
-//		zahlung.setVerwendungszweck("Rechnung xyz");
-//		zahlung.setEchtzeitueberweisung(false);
-//		zahlung1.setEmpfaenger("Eva Maier");
-//		zahlung1.setBetrag(2000);
-//		zahlung1.setVerwendungszweck("Mitgliedsbeitrag Reitverein");
-//		zahlung1.setEchtzeitueberweisung(true);
-//		zahlung2.setEmpfaenger("Georg Kanz");
-//		zahlung2.setBetrag(33.33f);
-//		zahlung2.setVerwendungszweck("ebay Kauf vom 11.01.22");
-//		zahlung2.setEchtzeitueberweisung(false);
-
-		depot.setListe(zahlung, 0);
-		depot.setListe(zahlung1, 1);
-		depot.setListe(zahlung2, 2);
+		//depot.setListe(zahlung, 0);
+		//depot.setListe(zahlung1, 1);
+		//depot.setListe(zahlung2, 2);
 	}
 
 	public void run(String[] args) {
@@ -65,23 +51,23 @@ public class ApplicationImpl implements Application {
 			zahlungdbquest.setIbandbquest(ibandbquest);
 			try (Statement stm = con.createStatement()) {
 
-				depot.setMessage("depot-Out");
+				//depot.setMessage("depot-Out");
 				// weg###Depot<Zahlung> depot1 = new DepotImpl<Zahlung>();
-				depot1.setMessage("depot-In");
+				//depot1.setMessage("depot-In");
 				// weg###DepotView depotview = new DepotViewImpl();
 
-				this.initAll(depot);
-				zahlungView.zahlungAnzeigen(depot, zahlung);
-				zahlungView.zahlungAnzeigen(depot, zahlung1);
+				//this.initAll(depot);
+				//zahlungView.zahlungAnzeigen(depot, zahlung);
+				//zahlungView.zahlungAnzeigen(depot, zahlung1);
 				// ###zahlungView.zahlungAnzeigen(depot, zahlung2);
 
-				depotview.depotAnzeige(depot);
+				//depotview.depotAnzeige(depot);
 				// ###depotview.csvView(depot);
 				// ###depotview.csvFileWrite(depot);
 
 				// ###depotview.csvFileReader(depot1,"eingabedatei.csv");
-
-				depotview.depotAnzeige(depot1);
+				//depotview.depotAnzeige(depot1);
+				
 				zahlung = zahlungdbquest.getZahlung(6);
 				System.out.println("\nEmpfänger :" + zahlung.getEmpfaenger());
 				zahlung1 = zahlungdbquest.getZahlung(7);
@@ -103,14 +89,15 @@ public class ApplicationImpl implements Application {
                 
                 
 				BankingMenu unserMenu = new BankingMenu();
-
+System.out.println();
+System.out.println();
 				while (true) {
 					switch (unserMenu.mainShow(this, depot1)) {
 					case "1":
-						depotview.depotAnzeige(depot);
+						zahlungdbquest.getAll();
 						break;
 					case "2":
-						zahlungView.zahlungAnzeigen(depot, zahlung2);
+						zahlungdbquest.getZahlung(6);
 						break;
 					case "3":
 						depotview.csvView(depot);
