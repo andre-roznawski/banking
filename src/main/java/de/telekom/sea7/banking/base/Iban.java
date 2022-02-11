@@ -1,5 +1,10 @@
 package de.telekom.sea7.banking.base;
 
+import de.telekom.sea7.banking.Entity;
+import de.telekom.sea7.banking.Table;
+
+@Entity
+@Table(name ="iban")
 public interface Iban {
 
 	int getIban_id();

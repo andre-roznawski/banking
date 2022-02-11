@@ -2,16 +2,28 @@ package de.telekom.sea7.banking;
 
 import de.telekom.sea7.banking.base.Iban;
 import de.telekom.sea7.banking.base.Zahlung;
+import javax.persistence.*;
 
+@Entity
+@Table(name ="zahlungen")
 public class ZahlungImpl implements Zahlung {
 
+	
+@Id
 	private int zahlung_id;
+@Column(name ="Empfaenger")
 	private String empfaenger;
+@Column(name ="Betrag")
 	private float betrag;
+@Column(name ="Verwendungszweck")	
 	private String verwendungszweck;
+@Column(name ="Echtzeitueberweisung")	
 	private boolean echtzeitueberweisung;
+@Column(name ="iban_id")	
 	private int ibanid;
+@ManyToOne
 	private Iban iban;
+	
 	
 	/* Muss ich machen, da wir uns einen eigenen Konstruktor gebaut haben. */
 	public ZahlungImpl() {
